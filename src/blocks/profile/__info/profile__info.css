@@ -1,0 +1,16 @@
+.profile__info {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+}
+
+@media screen and (min-width: 769px) {
+    .profile__info {
+        margin-right: auto;
+        text-align: left;
+        margin-top: 15px;
+    }
+}

@@ -1,0 +1,7 @@
+.element__like-section {
+    display: flex;
+    flex-direction: column;
+    max-width: 20px;
+    margin-right: 20px;
+    box-sizing: border-box;
+  }

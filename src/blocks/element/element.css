@@ -1,0 +1,11 @@
+ .element {
+     padding-top: 0;
+     padding-bottom: 0;
+     background-color: white;
+     max-width: 282px;
+     border-radius: 10px;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     position: relative;
+ }
