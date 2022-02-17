@@ -15,13 +15,10 @@ const Register = ({
 
     const handleSubmit = (e) =>  {
         e.preventDefault();
-        if (!email || !password) {
-            return;
-        }
         onRegister(email, password);
     }
 
-    const onSubmitClick = _ => {
+    const onSubmitClick = () => {
         history.push('/signin');
     }
 
