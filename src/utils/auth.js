@@ -36,7 +36,8 @@ export const register = (email, password) => {
 }
 
 
-export const tokenCheck = (token) => {
+
+export const checkToken = (token) => {
     return fetch(`${BASE_URL}/users/me`, {
         method: 'GET',
         headers: {

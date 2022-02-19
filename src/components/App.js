@@ -14,7 +14,7 @@ import Login from "./Login.js";
 import Register from "./Register.js";
 import ProtectedRoute from "./ProtectedRoute.js";
 import InfoTooltip from "./InfoTooltip.js";
-import { login, register, tokenCheck } from '../utils/auth';
+import { checkToken, login, register } from '../utils/auth';
 
 function App() {
     const[isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
@@ -126,9 +126,10 @@ function App() {
 }
 
 // Вход в систему  
-const handleLogin = _ => {
+const handleLogin = (email) => {
   setLoggedIn(true);
-  history.push("/cards");
+  history.push("/");
+  setEmail(email);
 }
 
 // Выход из системы  
@@ -140,12 +141,12 @@ const handleSignOut = () => {
 
 // проверка  токена
 useEffect(()=>{
-  checkToken();
+  inspectToken()
 },[]);
 
 
-const infoToolTipOpen = (type) => {
-  setSuccess(type);
+const infoToolTipOpen = (isSuccess) => {
+  setSuccess(isSuccess);
   setIsInfoTooltipOpen(true);
 }
 
@@ -155,8 +156,8 @@ const onLogin = (email, password) => {
       .then((data) => {
           if (data.token) {
               localStorage.setItem('token', data.token);
-              handleLogin();
-              setEmail(email);
+              handleLogin(email);
+              
           }
       })  
       .catch(err => {
@@ -171,8 +172,8 @@ const onRegister = (email, password) => {
   .then((res) => {
       if (res.data._id) {
           infoToolTipOpen(true);
-          history.push('/signin');
-      }                   
+          setTimeout(() => { onLogin(email, password)}, 1000)
+      }                  
   })
   .catch((err) => {
       console.log(err)
@@ -181,14 +182,14 @@ const onRegister = (email, password) => {
 };
 
 // Проверка токена  
-const checkToken = () => {
+const inspectToken = () => {
+  const token = localStorage.getItem('token');
   if (localStorage.getItem('token')) {
-      const token = localStorage.getItem('token');
-      tokenCheck(token)
+      checkToken(token)
       .then(res => {
           if (res.data.email) {
-              setEmail(res.data.email);
-              handleLogin();
+              // setEmail(res.data.email);
+              handleLogin(res.data.email);
           }
       })
       .catch(err => console.log(err));
@@ -200,13 +201,12 @@ const checkToken = () => {
       <div className="page">
       <Header
        email={email} 
-       loggedIn={loggedIn}
        handleSignOut={handleSignOut}/>
       <Switch>
         <ProtectedRoute 
-                        path="/cards" 
-                        loggedIn={loggedIn}  
+                        exact path="/" 
                         component={Main} 
+                        loggedIn={loggedIn}  
                         onEditProfile={handleEditProfileClick}
                         onEditAvatar={handleEditAvatarClick}
                         onAddPlace={handleAddPlaceClick}
@@ -216,25 +216,25 @@ const checkToken = () => {
                         cards={cards}
                     />
                       
-                    <Route path="/signup">
+                    <Route path="/sign-up">
                         <Register                             
                             onRegister={onRegister}
                         />
 
                     </Route>
 
-                    <Route path="/signin">
+                    <Route path="/sign-in">
                         <Login
                             onLogin={onLogin}
                         />
                     </Route>
 
-                    <Route path="/">
-                        {loggedIn ? <Redirect to="/cards" /> : <Redirect to="/signin" />}
+                    <Route>
+                        {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
                     </Route>
                 </Switch> 
-      <Footer/>
-  
+      <Footer />
+
       <EditProfilePopup 
       isOpen={isEditProfilePopupOpen} 
       onClose={closeAllPopups} 

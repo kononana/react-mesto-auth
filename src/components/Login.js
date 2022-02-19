@@ -14,8 +14,6 @@ const Login = ({ onLogin }) => {
         
     } 
 
-    
-
     return (
         <form name="login" className="registration" onSubmit={handleSubmit}>
             <h2 className="registration__title">Вход</h2>

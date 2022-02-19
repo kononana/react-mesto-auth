@@ -7,17 +7,15 @@ function Header(props) {
     <img src={logo} alt="логотип в шапке" className="header__logo"/>
     <nav className='header__nav'>
     <Switch>
-    <Route exact path="/cards">
+    <Route exact path="/">
         <p className='header__link_email'>{props.email}</p>
-        <Link to="signin" className='header__link' onClick={props.handleSignOut} >Выйти</Link>
+        <Link to="sign-up" className='header__link' onClick={props.handleSignOut} >Выйти</Link>
     </Route>
-    <Route exact path="/signin">
-        <p>{props.email}</p>
-        <Link to="signup" className='header__link'>Регистрация</Link>
+    <Route exact path="/sign-in">
+        <Link to="sign-up" className='header__link'>Регистрация</Link>
     </Route>
-    <Route exact path="/signup">
-        <p>{props.email}</p>
-        <Link to="signin" className='header__link'>Войти</Link>
+    <Route exact path="/sign-up">
+        <Link to="sign-in" className='header__link'>Войти</Link>
     </Route>
     </Switch>
 
@@ -27,3 +25,4 @@ function Header(props) {
 }
 
 export default Header
+

@@ -11,21 +11,21 @@ class Api {
     }
 }
   getInitialCards() {
-      return fetch(`${this._baseUrl}/cards`, {
+      return fetch(`${this._baseUrl}cards`, {
           headers: this._headers
       })
           .then(this._checkResponse)
   }
 
   getUserInfo() {
-      return fetch(`${this._baseUrl}/users/me`, {
+      return fetch(`${this._baseUrl}users/me`, {
           headers: this._headers
       })
           .then(this._checkResponse)
   }
 
   changeUserInfo(data) {
-      return fetch(`${this._baseUrl}/users/me`, {
+      return fetch(`${this._baseUrl}users/me`, {
           method: 'PATCH',
           headers: this._headers,
           body: JSON.stringify({ name: data.name, about: data.about })
@@ -34,7 +34,7 @@ class Api {
   }
 
   changeUserAvatar(data) {
-      return fetch(`${this._baseUrl}/users/me/avatar`, {
+      return fetch(`${this._baseUrl}users/me/avatar`, {
           method: 'PATCH',
           headers: this._headers,
           body: JSON.stringify({ avatar: data.avatar })
@@ -43,7 +43,7 @@ class Api {
   }
 
   addCard(data) {
-      return fetch(`${this._baseUrl}/cards`, {
+      return fetch(`${this._baseUrl}cards`, {
           method: 'POST',
           headers: this._headers,
           body: JSON.stringify({ name: data.name, link: data.link })
@@ -52,7 +52,7 @@ class Api {
   }
 
   deleteCard(data) {
-      return fetch(`${this._baseUrl}/cards/${data}`, {
+      return fetch(`${this._baseUrl}cards/${data}`, {
           method: 'DELETE',
           headers: this._headers
       })
